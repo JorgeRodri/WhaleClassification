@@ -1,86 +1,14 @@
 import tensorflow as tf
-import aifc
+from DataManager.Audio import get_spects, get_spects_enhanced
+from DataManager.General import get_labels, enhance_with_noise
 import os
 import numpy as np
-from matplotlib import mlab
 from os import listdir
 from os.path import isfile, join
 from sklearn.model_selection import train_test_split
 
 import datetime
-import csv
 import matplotlib.pyplot as plt
-
-
-def get_labels(labels_path):
-    labels = dict()
-    with open(labels_path, 'r') as f:
-        reader = csv.reader(f, dialect='excel')
-        for row in reader:
-            labels[row[0]] = row[1]
-    return labels
-
-
-def ReadAIFF(file):
-    s = aifc.open(file,'r')
-    nFrames = s.getnframes()
-    strSig = s.readframes(nFrames)
-    return np.fromstring(strSig, np.short).byteswap()
-
-
-def get_spects(onlyfiles, labels, p=0.7, cut=True):
-    if cut:
-        top_hz = 40
-    else:
-        top_hz = -1
-    sps = []
-    y = []
-    for file_path in onlyfiles:
-        s = ReadAIFF(file_path)
-        s = s[int(s.shape[0] * (1 - p) / 2): int(s.shape[0] * (1 + p) / 2)]
-        y.append(labels[file_path.split("\\")[-1]])
-        params = {'NFFT': 256, 'Fs': 2000, 'noverlap': 192}
-        P, freqs, bins = mlab.specgram(s, **params)
-        sps.append(P[:top_hz])
-    return np.array(sps), np.array(y)
-
-
-def get_spects_enhanced(onlyfiles, labels, p=0.7, cut=True):
-    if cut:
-        top_hz = 40
-    else:
-        top_hz = -1
-    sps = []
-    y = []
-    for file_path in onlyfiles:
-        s = ReadAIFF(file_path)
-        this_label = labels[file_path.split("\\")[-1]]
-        s1 = s[:int(s.shape[0] * p)]
-        y.append(this_label)
-        s2 = s[int(s.shape[0] * (1-p)/2): int(s.shape[0] * (1+p)/2)]
-        y.append(this_label)
-        s3 = s[int(s.shape[0] * (1-p)):]
-        y.append(this_label)
-        params = {'NFFT': 256, 'Fs': 2000, 'noverlap': 192}
-        P1, freqs, bins = mlab.specgram(s1, **params)
-        sps.append(P1[:top_hz, :])
-        P2, freqs, bins = mlab.specgram(s2, **params)
-        sps.append(P2[:top_hz, :])
-        P3, freqs, bins = mlab.specgram(s3, **params)
-        sps.append(P3[:top_hz, :])
-    return np.array(sps), np.array(y)
-
-
-def enhance_with_noise(X, Y):
-    whale_index, = np.where(Y == '1')
-    no_whale_index, = np.where(Y == '0')
-    x_enhanced = []
-    y_enhanced = []
-    for s_i in whale_index:
-        new_x = X[s_i] + 0.28*X[np.random.choice(no_whale_index)]
-        x_enhanced.append(new_x)
-        y_enhanced.append(1)
-    return np.array(x_enhanced),  np.array(y_enhanced)
 
 
 if __name__ == '__main__':

@@ -1,18 +1,26 @@
-from get_Spect_train_data import *
+import os
 import time
 import datetime
 
+import numpy as np
+from os.path import isfile, join
+from sklearn.model_selection import train_test_split
+
+from DataManager.Audio import get_spects, get_spects_enhanced
+from DataManager.General import get_labels, enhance_with_noise
+
+t1 = time.time()
+save_path = "/home/jorge/PycharmProjects/AudioExtraction/result_graphs"
+numpy_save_path = "/home/jorge/PycharmProjects/AudioExtraction/numpy_data"
+labels_path = "/home/jorge/Documents/DatasetsTFM/KaggleData/train.csv"
+train_path = "/home/jorge/Documents/DatasetsTFM/KaggleData/train"
+tag = 'prueba_100'
+
 if __name__ == '__main__':
     np.random.seed(21052711)
-    t1 = time.time()
-    save_path = "/home/jorge/PycharmProjects/AudioExtraction/result_graphs"
-    numpy_save_path = "/home/jorge/PycharmProjects/AudioExtraction/numpy_data"
-    labels_path = "/home/jorge/Documents/DatasetsTFM/KaggleData/train.csv"
-    train_path = "/home/jorge/Documents/DatasetsTFM/KaggleData/train"
-    tag = 'prueba_100'
 
     print('Reading paths to audiofiles, started at {}'.format(datetime.datetime.now()))
-    audiofiles = [os.path.join(train_path, f) for f in listdir(train_path) if isfile(join(train_path, f))]
+    audiofiles = [os.path.join(train_path, f) for f in os.listdir(train_path) if isfile(join(train_path, f))]
 
     labels_dict = get_labels(labels_path)
 
