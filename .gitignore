@@ -127,3 +127,7 @@ dmypy.json
 numpy_data/
 result_graphs/
 spectrograms/
+
+# pycharm
+.idea
+tfenv
