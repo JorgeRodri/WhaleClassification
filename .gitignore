@@ -125,10 +125,12 @@ dmypy.json
 .pyre/
 
 # data
-numpy_data/
-result_graphs/
-spectrograms/
+numpy_data/*
+result_graphs/*
+spectrograms/*
+data/*
 
 # pycharm
 .idea
 data
+small_data_sample
