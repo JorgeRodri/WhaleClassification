@@ -104,6 +104,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+tfenv
 
 # Spyder project settings
 .spyderproject
@@ -124,10 +125,11 @@ dmypy.json
 .pyre/
 
 # data
-numpy_data/
-result_graphs/
-spectrograms/
+numpy_data/*
+result_graphs/*
+spectrograms/*
+data/*
 
 # pycharm
 .idea
-tfenv
+small_data_sample
