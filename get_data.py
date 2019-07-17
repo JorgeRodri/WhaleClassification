@@ -16,6 +16,7 @@ labels_path = "/home/jorge/Documents/DatasetsTFM/KaggleData/train.csv"
 train_path = "/home/jorge/Documents/DatasetsTFM/KaggleData/train"
 tag = 'prueba_100'
 
+
 if __name__ == '__main__':
     np.random.seed(21052711)
 
