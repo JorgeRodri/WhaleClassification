@@ -1,6 +1,8 @@
-from get_Spect_train_data import *
+from matplotlib import mlab
+import numpy as np
 import time
 import datetime
+from DataManager.Audio import read_aiff
 
 
 def get_spects(onlyfiles, labels, p=0.7, cut=True):
@@ -11,7 +13,7 @@ def get_spects(onlyfiles, labels, p=0.7, cut=True):
     sps = []
     y = []
     for file_path in onlyfiles:
-        s = ReadAIFF(file_path)
+        s = read_aiff(file_path)
         s = s[int(s.shape[0] * (1 - p) / 2): int(s.shape[0] * (1 + p) / 2)]
         y.append(labels[file_path.split("\\")[-1]])
         params = {'NFFT': 256, 'Fs': 2000, 'noverlap': 192}
@@ -28,7 +30,7 @@ def get_spects_enhanced(onlyfiles, labels, p=0.7, cut=True):
     sps = []
     y = []
     for file_path in onlyfiles:
-        s = ReadAIFF(file_path)
+        s = read_aiff(file_path)
         this_label = labels[file_path.split("\\")[-1]]
         s1 = s[:int(s.shape[0] * p)]
         y.append(this_label)

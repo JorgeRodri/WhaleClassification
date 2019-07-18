@@ -132,4 +132,5 @@ data/*
 
 # pycharm
 .idea
+data
 small_data_sample
