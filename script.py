@@ -1,12 +1,10 @@
-import matplotlib
-matplotlib.use('agg')
 import matplotlib.pyplot as plt
 import aifc
 from os import walk
 import numpy
 import os
-import librosa
-import librosa.display
+# import librosa
+# import librosa.display
 import scipy.signal as signal
 
 

@@ -1,5 +1,4 @@
 from scipy.io import wavfile
-from open_read import get_wavs
 
 
 def parse_file_name(file_name):
