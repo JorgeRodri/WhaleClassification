@@ -42,3 +42,5 @@ print(df_non_std['label'].value_counts())
 print(df_non_std[df_non_std['audio_samples'] != 4000]['label'].value_counts().head())
 print(df_non_std[df_non_std['audio_samples'] != 4000]['framerate'].value_counts().head())
 print(df_non_std[df_non_std['audio_samples'] != 4000]['nframes'].value_counts().head())
+
+# TODO: find if whales calls are centered
