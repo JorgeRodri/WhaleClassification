@@ -8,11 +8,11 @@ import os
 import scipy.signal as signal
 
 
-def get_spec_mel(file):
+def get_spec_mel(file_path):
     save_name = '../Spectrograms/mel/'
     plt.axis('off')
-    print(save_name, file[20:-5],'.png')
-    plt.savefig(save_name + file[20:-5] + '.png',
+    print(save_name, file_path[20:-5], '.png')
+    plt.savefig(save_name + file_path[20:-5] + '.png',
                 dpi=100,  # Dots per inch
                 frameon='false',
                 aspect='normal',
@@ -21,16 +21,16 @@ def get_spec_mel(file):
     plt.close()
 
 
-def get_spec_scipy(file):
+def get_spec_scipy(file_path):
     save_name = '../Spectrograms/scipy/'
-    with aifc.open(file, 'r') as f:
+    with aifc.open(file_path, 'r') as f:
         nframes = f.getnframes()
         strsig = f.readframes(nframes)
         data = numpy.fromstring(strsig, numpy.short).byteswap()
         f, t, sxx = signal.spectrogram(data)
         plt.pcolormesh(t, f, sxx)
     plt.axis('off')
-    plt.savefig(save_name + file[20:-5] + '.png',
+    plt.savefig(save_name + file_path[20:-5] + '.png',
                 dpi=100,  # Dots per inch
                 frameon='false',
                 aspect='normal',
@@ -41,8 +41,7 @@ def get_spec_scipy(file):
 
 def split_list(alist, wanted_parts=1):
     length = len(alist)
-    return [ alist[i*length // wanted_parts: (i+1)*length // wanted_parts]
-             for i in range(wanted_parts) ]
+    return [alist[i*length // wanted_parts: (i+1)*length // wanted_parts] for i in range(wanted_parts) ]
 
 
 def get_files(folder_path):
