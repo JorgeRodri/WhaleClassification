@@ -10,7 +10,7 @@ def read_aiff(file):
     return np.fromstring(strsig, np.short).byteswap()
 
 
-def get_spects(onlyfiles, labels, p=0.7, cut=True):
+def get_spects(onlyfiles, labels=N, p=0.7, cut=True):
     if cut:
         top_hz = 40
     else:
