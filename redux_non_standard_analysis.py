@@ -15,14 +15,23 @@ from os import listdir
 import matplotlib.pyplot as plt
 
 
+def fill_array(data):
+    zeros = np.zeros(4000)
+    index_ = 0
+    pass
+
+
 def read_aiff_detailed(file):
     s = aifc.open(file, 'r')
     framerate = s.getframerate()
     nframes = s.getnframes()
     strsig = s.readframes(nframes)
-    return {'data': np.fromstring(strsig, np.short).byteswap(),
+    data = np.fromstring(strsig, np.short).byteswap()
+    corrected_data = fill_array(data)
+    return {'data': data,
             'framerate': framerate,
-            'nframes': nframes}
+            'nframes': nframes,
+            'data_corrected': corrected_data}
 
 
 train_redux_path = "data/train2/"
@@ -33,7 +42,8 @@ no_std_files = [[i,
                  i.split('/')[-1][-5],
                  read_aiff_detailed(i)['data'].shape[0],
                  read_aiff_detailed(i)['framerate'],
-                 read_aiff_detailed(i)['nframes']]
+                 read_aiff_detailed(i)['nframes'],
+                 read_aiff_detailed(i)['nframes'].shape]
                 for i in reduxfiles]
 
 df_non_std = pd.DataFrame(no_std_files, columns=['file', 'label', 'audio_samples', 'framerate', 'nframes'])

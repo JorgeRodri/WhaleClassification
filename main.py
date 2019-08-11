@@ -42,19 +42,21 @@ if __name__ == "__main__":
     X_redux_path = np.array(reduxfiles)[:limitador]
 
     # TODO: not all audio clip in the redux dataset has the same length
-    from DataManager.Audio import read_aiff
-    print([(i.split('/')[-1][-5], read_aiff(i).shape[0]) for i in X_redux_path if read_aiff(i).shape[0] != 4000])
-    print([i for i in X_path if read_aiff(i).shape[0] != 4000])
+    # from DataManager.Audio import read_aiff
+    # print([(i.split('/')[-1][-5], read_aiff(i).shape[0]) for i in X_redux_path if read_aiff(i).shape[0] != 4000])
+    # print([i for i in X_path if read_aiff(i).shape[0] != 4000])
 
-    # # Start the process of data extraction, spectrogram transformation and data enhancement
-    # print('Generating train and test split')
-    # X_train_path, X_test_path = train_test_split(np.concatenate([X_path, X_redux_path]), test_size=0.3)
-    #
-    # print('Getting test spectrograms')
-    # X_test, Y_test = get_spects(X_test_path, labels_dict)
-    #
-    # print('Getting train spectrograms + enhancement')
-    # X_train, Y_train = get_spects_enhanced(X_train_path, labels_dict)
+    # Start the process of data extraction, spectrogram transformation and data enhancement
+    print('Generating train and test split')
+    X_train_path, X_test_path = train_test_split(np.concatenate([X_path, X_redux_path]), test_size=0.3)
+
+    print('Getting test spectrograms')
+    X_test, Y_test = get_spects(X_test_path, labels_dict)
+
+    print('Getting train spectrograms + enhancement')
+    X_train, Y_train = get_spects_enhanced(X_train_path, labels_dict)
+
+    print(X_train.shape)
     #
     # print('Getting even more data adding noise to whale calls')
     # X_enhanced, Y_enhanced = enhance_with_noise(X_train, Y_train)

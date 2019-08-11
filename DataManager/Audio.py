@@ -10,7 +10,7 @@ def read_aiff(file):
     return np.fromstring(strsig, np.short).byteswap()
 
 
-def get_spects(onlyfiles, labels=N, p=0.7, cut=True):
+def get_spects(onlyfiles, labels, p=0.7, cut=True):
     if cut:
         top_hz = 40
     else:
@@ -19,6 +19,8 @@ def get_spects(onlyfiles, labels=N, p=0.7, cut=True):
     y = []
     for file_path in onlyfiles:
         s = read_aiff(file_path)
+        if s.shape[0] != 4000:
+            continue
         s = s[int(s.shape[0] * (1 - p) / 2): int(s.shape[0] * (1 + p) / 2)]
         # check if it comes from redux data it is not in the labels dictionary
         try:
@@ -45,6 +47,8 @@ def get_spects_enhanced(onlyfiles, labels, p=0.7, cut=True):
     y = []
     for file_path in onlyfiles:
         s = read_aiff(file_path)
+        if s.shape[0] != 4000:
+            continue
         # check if it comes from redux data it is not in the labels dictionary
         try:
             this_label = labels[file_path.split("/")[-1]]
