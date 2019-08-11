@@ -13,20 +13,20 @@ import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
 
-    save_path = "C:\\Users\\jorge\\PycharmProjects\\AudioExtraction\\result_graphs"
-    labels_path = "C:\\Users\\jorge\\DatasetsTFM\\KaggleData\\train.csv"
-    train_path = "C:\\Users\\jorge\\DatasetsTFM\\KaggleData\\train"
+    save_path = "result_graphs"
+    labels_path = "data/train.csv"
+    train_path = "data/train"
 
-    tag = 'prueba_100'
+    tag = 'prueba_100_small_data'
 
     print('Reading paths to audiofiles, started at {}'.format(datetime.datetime.now()))
     audiofiles = [os.path.join(train_path, f) for f in listdir(train_path) if isfile(join(train_path, f))]
 
     labels_dict = get_labels(labels_path)
 
-    label_by_order = np.vectorize(lambda x: labels_dict[x.split('\\')[-1]])
+    # label_by_order = np.vectorize(lambda x: labels_dict[x.split('\\')[-1]])
     np.random.shuffle(audiofiles)
-    X_path = np.array(audiofiles)[:1000]  # limitador
+    X_path = np.array(audiofiles)  # limitador
     # Y = label_by_order(audiofiles)
 
     print('Generating train and test split')
@@ -44,6 +44,7 @@ if __name__ == '__main__':
 
     print('Setting parameters and data reshape for the training')
     opt = tf.keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    opt = tf.keras.optimizers.RMSprop()
 
     Y_train, Y_test = Y_train.astype(int), Y_test.astype(int)
     Y_train, Y_test = tf.keras.utils.to_categorical(Y_train, 2), tf.keras.utils.to_categorical(Y_test, 2)
@@ -66,12 +67,12 @@ if __name__ == '__main__':
         tf.keras.layers.Dropout(0.2),
         tf.keras.layers.Dense(2, activation=tf.nn.softmax, name="Softmax")
         ])
-    model.compile(optimizer='adam',
+    model.compile(optimizer=opt,
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
 
     print('Training model')
-    history = model.fit(X_train, Y_train, epochs=10, verbose=1)
+    history = model.fit(X_train, Y_train, epochs=20, verbose=1)
     score = model.evaluate(X_test, Y_test)
 
     print(score)
