@@ -87,7 +87,7 @@ classifiers = {'Support Vector Machine': [], 'Naive Bayes': [],
 classifiers_by_channel = []
 for i in range(number_channels):
     classifiers_by_channel += [{'Support Vector Machine': [], 'Naive Bayes': [], 
-               'K-Nearest Neighbors':[], 'Random Forest': [], 'XGBoost': []}]
+                                'K-Nearest Neighbors':[], 'Random Forest': [], 'XGBoost': []}]
 
 iteration = 1
 for train_index, test_index in loo.split(X):

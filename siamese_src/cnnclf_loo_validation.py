@@ -41,15 +41,16 @@ epochs = 20
 number_channels = 16
 
 frequencies_nomenclature = ['delta', 'theta1', 'theta2', 'alpha1', 'alpha2', 
-                   'beta1', 'beta2', 'beta3', 'gamma']
+                            'beta1', 'beta2', 'beta3', 'gamma']
 
 channel_nomenclature = ['F7', 'F3', 'F4', 'F8', 'T3', 'C3', 'Cz', 'C4', 'T4',
-                    'T5', 'P3', 'Pz', 'P4', 'T6', 'O1', 'O2']
+                        'T5', 'P3', 'Pz', 'P4', 'T6', 'O1', 'O2']
 
 init = keras.initializers.glorot_uniform(seed=0)
 
+
 def stft_to_freq_bin(freq_map, frequencies, timesteps):
-    #at each time step binarize the frequencies freq_map[:,0]
+    # at each time step binarize the frequencies freq_map[:,0]
     freq_map = abs(freq_map)
     
     stft_bins = []
@@ -81,7 +82,6 @@ def stft_to_freq_bin(freq_map, frequencies, timesteps):
     return np.array(stft_bins)
 
 
-
 def get_population_stft_by_bins(population, ids, binarize=True, n_channels=16, fs=128, nperseg=256):
     pop_stft = []
     
@@ -102,7 +102,8 @@ def get_population_stft_by_bins(population, ids, binarize=True, n_channels=16, f
 
     return pop_stft
 
-#gather a channel to train a network
+
+# gather a channel to train a network
 def get_channel(x, y, channel, n_channels=16):
     X_channel = []
     y_channel = []
@@ -113,7 +114,8 @@ def get_channel(x, y, channel, n_channels=16):
 
     return np.array(X_channel), y_channel
 
-#normalize the frequency amplityudes until a certain threshold
+
+# normalize the frequency amplityudes until a certain threshold
 def normalize_features(x, max_magnitude=300):
 
     for ind in range(len(x)):
@@ -157,8 +159,9 @@ def create_base_network(input_shape, kernel_size, reg, final_dim):
     print(model.summary())
     return model
 
-class convolutional:
-    def __init__(self, reg=0.011, kernel_size=(6,6), lr= 0.0004, final_dim=12):
+
+class Convolutional:
+    def __init__(self, reg=0.011, kernel_size=(6, 6), lr=0.0004, final_dim=12):
         self.cnn = create_base_network(input_shape, kernel_size, reg, final_dim)
 
         adam = Adam(lr=lr)
@@ -243,7 +246,7 @@ for train_index, test_index in loo.split(X_pop):
 
     K.clear_session()
 
-    cnn = convolutional(reg=regularization, kernel_size=kernel_size, lr=learning_rate, final_dim=final_dimension)
+    cnn = Convolutional(reg=regularization, kernel_size=kernel_size, lr=learning_rate, final_dim=final_dimension)
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
@@ -271,7 +274,6 @@ for train_index, test_index in loo.split(X_pop):
                 channel_predictions[channel] += [0]
 
     K.clear_session()
-
 
     print("============================================")
     print("ENDED PARTITION ", n_partition, " taking a total of ", time_lib.time()-start, "seconds")

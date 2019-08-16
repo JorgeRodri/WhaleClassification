@@ -31,11 +31,11 @@ import tensorflow as tf
 
 import os
 
-import optimize_classifier as opt_clf
+import siamese_src.optimize_classifier as opt_clf
 
 import time as time_lib
 
-import eeg
+import siamese_src.eeg
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 
@@ -50,12 +50,13 @@ frequencies_nomenclature = ['delta', 'theta1', 'theta2', 'alpha1', 'alpha2',
                    'beta1', 'beta2', 'beta3', 'gamma']
 
 channel_nomenclature = ['F7', 'F3', 'F4', 'F8', 'T3', 'C3', 'Cz', 'C4', 'T4',
-                    'T5', 'P3', 'Pz', 'P4', 'T6', 'O1', 'O2']
+                        'T5', 'P3', 'Pz', 'P4', 'T6', 'O1', 'O2']
 
 init = keras.initializers.glorot_uniform(seed=0)
 
+
 def stft_to_freq_bin(freq_map, frequencies, timesteps):
-    #at each time step binarize the frequencies freq_map[:,0]
+    #  at each time step binarize the frequencies freq_map[:,0]
     freq_map = abs(freq_map)
     
     stft_bins = []

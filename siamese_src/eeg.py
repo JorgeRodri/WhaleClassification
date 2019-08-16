@@ -4,7 +4,7 @@ import numpy as np
 ######################################################################
 #
 # get file names from schizophrenia group
-#change the directory path to what best suits you
+# change the directory path to what best suits you
 #
 ######################################################################
 def get_scz_files(directory='../dataset/scz'):
@@ -100,7 +100,7 @@ def get_scz_instances():
 def get_hc_instances():
     hc_files = get_hc_files()
 
-    #change this path to the dataset path of schizphrenian individuals
+    # change this path to the dataset path of schizphrenian individuals
     directory = '../dataset/healthy/'
     
     instances = []
