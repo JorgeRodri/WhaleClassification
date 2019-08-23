@@ -81,7 +81,7 @@ strat = [0]*39 + [1]*45
 loo = LeaveOneOut()
 
 classifiers = {'Support Vector Machine': [], 'Naive Bayes': [], 
-               'K-Nearest Neighbors':[], 'Random Forest': [], 'XGBoost': []}
+               'K-Nearest Neighbors': [], 'Random Forest': [], 'XGBoost': []}
 
 
 classifiers_by_channel = []
