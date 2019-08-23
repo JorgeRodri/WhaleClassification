@@ -4,9 +4,9 @@ from matplotlib import mlab
 
 
 def read_aiff(file):
-    s = aifc.open(file, 'r')
-    nframes = s.getnframes()
-    strsig = s.readframes(nframes)
+    with aifc.open(file, 'r') as s:
+        nframes = s.getnframes()
+        strsig = s.readframes(nframes)
     return np.fromstring(strsig, np.short).byteswap()
 
 

@@ -106,7 +106,6 @@ for train_index, test_index in loo.split(X):
                 X_train += [fft_to_freq_bin(abs(fft_instance[range(int(N/2))]), N)]
             else:
                 X_train += [abs(fft_instance[range(int(N/2))])]
-            
 
     y_train = []
     for i in range(len(train_labels)):

@@ -235,7 +235,7 @@ class siamese:
         processed_a = self.base_network(input_a)
         processed_b = self.base_network(input_b)
 
-        distance = Lambda(cosine_distance,#compare this results with euclidean
+        distance = Lambda(cosine_distance,  # compare this results with euclidean
                           output_shape=cos_dist_output_shape)([processed_a, 
                           processed_b])
 
