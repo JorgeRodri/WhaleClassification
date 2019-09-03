@@ -1,0 +1,13 @@
+Problems from this approach that deserbve to be mentioned are:
+    - The calls are assumed to be in the middle of the image, with a very short duration
+    - After the spectrograms are cut so the highest frequencies get ignored which is useful for this problem but other
+    whale calls can have different frequencies.
+    - The original spectrogram  are much heavier that the reduced ones, however this only affects the training time and
+    the size of the model which is something that in many situations can be taken on for a better generalization or
+    problem transference (total spects time of 700s on average per epoch, reduced to 311s when dimension reduced.
+    sizes vary from 4.93GB to 2.97GB)
+    - The model is able to easily separate whale calls from random noise, but fails from other whale calls
+    or similar noises
+    - The model is software dependant, the way the spectograms are calculated, normalized and audio data is sampled,
+    can  affect  a lot the classification, moreover if data is taken from another kind of hardware, different microphone
+    or different set up the results can vary inmensely. Audio data temps not to be very consistent
