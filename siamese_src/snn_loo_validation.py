@@ -159,6 +159,7 @@ class contrastive_loss():
         margin_square = K.square(K.maximum(self.margin - y_pred, 0))
         return K.mean(y_true * square_pred + (1 - y_true) * margin_square)
 
+
 def create_pairs(x, y, n_channels=16):
     pairs = []
     labels = []
@@ -212,6 +213,7 @@ def create_base_network(input_shape, kernel_size=(6,6), final_dimension=12, regu
                 bias_initializer='zeros'))#13
     print(model.summary())
     return model
+
 
 def compute_accuracy(y_true, y_pred):
     pred = y_pred.ravel() < 0.5

@@ -1,6 +1,7 @@
 import os
 import time
 import datetime
+from math import floor
 
 import numpy as np
 from os.path import isfile, join
@@ -16,9 +17,15 @@ import matplotlib.pyplot as plt
 
 
 def fill_array(data):
-    zeros = np.zeros(4000)
-    index_ = 0
-    pass
+    if data.shape[0] < 4000:
+        corrected_data = np.zeros(4000)
+        corrected_data[:data.shape[0]] = data
+    elif data.shape[0] > 4000:
+        corrected_data = data[floor((data.shape[0] - 4000)/2):
+                              data.shape[0] - floor((data.shape[0]-4000)/2)]
+    else:
+        corrected_data = data
+    return corrected_data
 
 
 def read_aiff_detailed(file):
@@ -28,6 +35,7 @@ def read_aiff_detailed(file):
     strsig = s.readframes(nframes)
     data = np.fromstring(strsig, np.short).byteswap()
     corrected_data = fill_array(data)
+    s.close()
     return {'data': data,
             'framerate': framerate,
             'nframes': nframes,
