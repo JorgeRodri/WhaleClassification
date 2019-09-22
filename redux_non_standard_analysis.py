@@ -34,12 +34,9 @@ def read_aiff_detailed(file):
     nframes = s.getnframes()
     strsig = s.readframes(nframes)
     data = np.fromstring(strsig, np.short).byteswap()
-    corrected_data = fill_array(data)
+    # corrected_data = fill_array(data)
     s.close()
-    return {'data': data,
-            'framerate': framerate,
-            'nframes': nframes,
-            'data_corrected': corrected_data}
+    return [data.shape, framerate, nframes]
 
 
 train_redux_path = "data/train2/"
@@ -48,10 +45,7 @@ reduxfiles = [os.path.join(train_redux_path, f) for f in listdir(train_redux_pat
 
 no_std_files = [[i,
                  i.split('/')[-1][-5],
-                 read_aiff_detailed(i)['data'].shape[0],
-                 read_aiff_detailed(i)['framerate'],
-                 read_aiff_detailed(i)['nframes'],
-                 read_aiff_detailed(i)['nframes'].shape]
+                 read_aiff_detailed(i)]
                 for i in reduxfiles]
 
 df_non_std = pd.DataFrame(no_std_files, columns=['file', 'label', 'audio_samples', 'framerate', 'nframes'])
