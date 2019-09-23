@@ -33,12 +33,12 @@ def get_spects(onlyfiles, labels, p=0.7, cut=True):
         finally:
             y.append(this_y)
         params = {'NFFT': 256, 'Fs': 2000, 'noverlap': 192}
-        P, freqs, bins = mlab.specgram(s, **params)
-        sps.append(P[:top_hz])
+        sp, freqs, bins = mlab.specgram(s, **params)
+        sps.append(sp[:top_hz])
     return np.array(sps), np.array(y)
 
 
-def get_spects_enhanced(onlyfiles, labels, p=0.7, cut=True):
+def get_spects_enhanced(onlyfiles, labels, p=0.85, cut=True):
     if cut:
         top_hz = 40
     else:
