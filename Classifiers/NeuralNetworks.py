@@ -38,4 +38,3 @@ def winners_nn(input_size):
     nn.add(tf.keras.layers.Dense(2, activation='softmax'))
     return nn
 
-
