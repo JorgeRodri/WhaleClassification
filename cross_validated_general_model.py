@@ -69,7 +69,7 @@ def k_fold_cross_validation(x_files, labels_path, model, f_preprocess, n_splits=
 
     for train, test in kfold.split(x_files,  map(lambda x: labels_dict[x], x_files)):
         x_train, y_train, x_test, y_test = f_preprocess(x_files[train], x_files[test], labels_dict)
-        # Compile model
+        # Compile model     
         model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         history = model.model.fit(x_train, y_train, epochs=150, verbose=2, validation_split=0.2)
         score = model.model.evaluate(x_test, y_test)
