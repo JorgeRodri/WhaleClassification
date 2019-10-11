@@ -107,3 +107,19 @@ def get_spects_enhance_only_whales(onlyfiles, labels, p=0.85, top_hz=-1):
             p, freqs, bins = mlab.specgram(s, **params)
             sps.append(p[:top_hz, :])
     return np.array(sps), np.array(y)
+
+
+def get_submission_spects(onlyfiles, p=0.85, top_hz=-1):
+
+    sps = []
+    files = []
+    for file_path in onlyfiles:
+        s = read_aiff(file_path)
+        if s.shape[0] != 4000:
+            continue
+        s = s[int(s.shape[0] * (1 - p) / 2): int(s.shape[0] * (1 + p) / 2)]
+        params = {'NFFT': 256, 'Fs': 2000, 'noverlap': 192}
+        sp, freqs, bins = mlab.specgram(s, **params)
+        sps.append(sp[:top_hz])
+        files.append(file_path.split("/")[-1])
+    return np.array(sps), np.array(files)
