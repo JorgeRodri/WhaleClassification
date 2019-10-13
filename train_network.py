@@ -13,7 +13,6 @@ if __name__ == '__main__':
 
     tag = 'prueba_100'
     print('Loading data, started at {}'.format(datetime.datetime.now()))
-
     X_train = np.load(os.path.join(numpy_save_path, 'xtrain.npy'))
     X_test = np.load(os.path.join(numpy_save_path, 'xtest.npy'))
     Y_train = np.load(os.path.join(numpy_save_path, 'ytrain.npy'))
