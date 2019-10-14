@@ -54,7 +54,7 @@ np.random.seed(21052711)  # Fixed random seed, change for data shuffle and test 
 """
 In case not all the data is used
 """
-limiter_original = None  # None for complete data, 0 for ignoring the data set
+limiter_original = 5000  # None for complete data, 0 for ignoring the data set
 limiter_redux = 0  # None for complete data, 0 for ignoring the data set
 
 """
